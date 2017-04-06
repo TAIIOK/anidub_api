@@ -4,6 +4,7 @@ title: Anidub API
 mediaType: application/json
 version: v1
 baseUri: http://anidub-api.herokuapp.com/method
+
 types:
   fav_basic_struct:
     type: object
@@ -65,7 +66,7 @@ types:
           Code: integer
           Message: string
           Data:
-            type: object
+            type: array
             properties:
               ID: integer
               Url: string
@@ -125,24 +126,53 @@ types:
             type: object
             properties:
               ID: string
+  titles_getEpisodes_response:
+    type: object
+    properties:
+      Error: boolean
+      Response:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+          Data:
+            type: object
+            properties:
+                Mirror:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Name: string
+                      Url: string
+                Anidub:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Name: string
+                      Url: string
 
 /titles.list:
-    description: "Get List of anime from page"
-    post:
+  displayName:
+  description: "Get List of anime from page"
 
-      displayName: "Get List of anime from page"
-      body:
+  post:
+    displayName:
+    description:
+
+    body:
+      application/json:
+        type: Page_struct
+        example: |
+          {
+          "page":1
+          }
+    responses:
+      200:
+       body:
         application/json:
-          type: Page_struct
           example: |
-            {
-            "page":1
-            }
-      responses:
-       200:
-        body:
-          application/json:
-            example: |
               {
               "Error": false,
               "Response": {
@@ -415,6 +445,7 @@ types:
       200:
         body:
           application/json:
+            type: titles_getEpisodes_response
             example: |
               {
               "Error": false,
