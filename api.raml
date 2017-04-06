@@ -9,53 +9,100 @@ types:
   fav_basic_struct:
     type: object
     properties:
-      id: integer
-      user_id: integer
-      password: string
+      id:
+        type: integer
+        description: "ID тайтла"
+      user_id:
+        type: integer
+        description: "ID пользователя"
+      password:
+        type: string
+        description: "Пароль в формате md5"
   fav_count_struct:
     type: object
     properties:
-      user_id: integer
-      password: string
+      user_id:
+        type: integer
+        description: "ID пользователя"
+      password:
+        type: string
+        description: "Пароль в формате md5"
   fav_list_struct:
     type: object
     properties:
-      user_id: integer
-      password: string
-      page: integer
+      user_id:
+        type: integer
+        description: "ID пользователя"
+      password:
+        type: string
+        description: "Пароль в формате md5"
+      page:
+        type: integer
+        description: "Страница в закладках"
   Account_login_struct:
     type: object
     properties:
-      login: string
-      password: string
+      login:
+        type: string
+        description: "Логин пользователя"
+      password:
+        type: string
+        description: "Пароль пользоватля в формате md5"
   Get_Episode_struct:
     type: object
     properties:
-      id: integer
+      id:
+        type: integer
+        description: "ID тайтла у которого надо получить серии"
   Super_Search_struct:
     type: object
     properties:
-      genres: integer
-      dubbers: integer
-      year: integer
-      studio: integer
-      sort: integer
-      cat: integer
-      series: integer
-      page: integer
+      genres:
+        type: integer
+        description: "ID жанра"
+      dubbers:
+        type: integer
+        description: "ID дабера"
+      year:
+        type: integer
+        description: "Год выхода"
+      studio:
+        type: integer
+        description: "ID студии"
+      sort:
+        type: integer
+        description: ""
+      cat:
+        type: integer
+        description: ""
+      series:
+        type: integer
+        description: "Количество серий"
+      page:
+        type: integer
+        description: "Страница"
   Search_struct:
     type: object
     properties:
-      query: string
-      page: integer
+      query:
+        type: string
+        description: "Строка с названием"
+      page:
+        type: integer
+        description: "Страница поиска)))"
+
   Page_struct:
     type: object
     properties:
-      page: integer
+      page:
+        type: integer
+        description: "Номер страницы"
   ID_Info_struct:
     type: object
     properties:
-      id: integer
+      id:
+        type: integer
+        description: "ID тайтла "
   TitleList:
     type: object
     properties:
@@ -66,7 +113,7 @@ types:
           Code: integer
           Message: string
           Data:
-            type: array
+            type: object
             properties:
               ID: integer
               Url: string
@@ -154,12 +201,12 @@ types:
                       Url: string
 
 /titles.list:
-  displayName:
-  description: "Get List of anime from page"
+  displayName: "Получить список тайтлов со страницы сайта"
+  description: "Получить список тайтлов со страницы сайта"
 
   post:
-    displayName:
-    description:
+    displayName: "Получить список тайтлов со страницы сайта"
+    description: "Получить список тайтлов со страницы сайта"
 
     body:
       application/json:
@@ -218,11 +265,11 @@ types:
                 }
                 }
 /titles.info:
-    displayName: "Get anime info from ID"
-    description: "Get anime info from ID"
+    displayName: "Получить иноформацию об тайтлов по ID"
+    description: "Получить иноформацию об тайтлов по ID"
     post:
-      displayName: "Get anime info from ID"
-      description: "Get anime info from ID"
+      displayName: "Получить иноформацию об тайтлов по ID"
+      description: "Получить иноформацию об тайтлов по ID"
       body:
         application/json:
           type: ID_Info_struct
@@ -297,11 +344,11 @@ types:
                   }
                 }
 /titles.search:
-  displayName: "Search anime by string"
-  description: "Search anime by string"
+  displayName: "Поиск тайтлов по названию"
+  description: "Поиск тайтлов по названию"
   post:
-    displayName: "Search anime by string"
-    description: "Search anime by string"
+    displayName: "Поиск тайтлов по названию"
+    description: "Поиск тайтлов по названию"
     body:
       application/json:
         type: Search_struct
@@ -360,11 +407,11 @@ types:
                 }
                 }
 /titles.sf:
-  displayName: "Super search. Search with parametrs"
-  description: "Super search. Search with parametrs"
+  displayName: "Расширеный поиск с использованием параметров"
+  description: "Расширеный поиск с использованием параметров"
   post:
-    displayName: "Super search. Search with parametrs"
-    description: "Super search. Search with parametrs"
+    displayName: "Расширеный поиск с использованием параметров"
+    description: "Расширеный поиск с использованием параметров"
     body:
       application/json:
         type: Super_Search_struct
@@ -429,11 +476,11 @@ types:
                 }
                 }
 /titles.getEpisodes:
-  displayName: "Get list of episodes"
-  description: "Get list of episodes"
+  displayName: "Полученить список серий тайтла по ID"
+  description: "Полученить список серий тайтла по ID"
   post:
-    displayName: "Get list of episodes"
-    description: "Get list of episodes"
+    displayName: "Полученить список серий тайтла по ID"
+    description: "Полученить список серий тайтла по ID"
     body:
       application/json:
         type: Get_Episode_struct
@@ -467,11 +514,11 @@ types:
               }
               }
 /account.login:
-  displayName: Ath to site
-  description: Ath to site
+  displayName: "Авторизация на сайте"
+  description: "Авторизация на сайте"
   post:
-    displayName: Ath to site
-    description: Ath to site
+    displayName: "Авторизация на сайте"
+    description: "Авторизация на сайте"
     body:
       application/json:
         type: Account_login_struct
@@ -497,11 +544,11 @@ types:
               }
               }
 /fav.list:
-  displayName: "anime in your bookmarks"
-  description: "anime in your bookmarks"
+  displayName: "Получить список тайтлов в закладках по странице"
+  description: "Получить список тайтлов в закладках по странице"
   post:
-    displayName: "anime in your bookmarks"
-    description: "anime in your bookmarks"
+    displayName: "Получить список тайтлов в закладках по странице"
+    description: "Получить список тайтлов в закладках по странице"
     body:
       application/json:
         type: fav_list_struct
@@ -561,11 +608,11 @@ types:
                 }
                 }
 /fav.count:
-  displayName: "return count of bookmarks"
-  description: "return count of bookmarks"
+  displayName: "Получить количество тайтлов в закладках"
+  description: "Получить количество тайтлов в закладках"
   post:
-    displayName: "return count of bookmarks"
-    description: "return count of bookmarks"
+    displayName: "Получить количество тайтлов в закладках"
+    description: "Получить количество тайтлов в закладках"
     body:
       application/json:
         type: fav_count_struct
@@ -589,11 +636,11 @@ types:
               }
               }
 /fav.isFAV:
-  displayName: "return is this anima in your bookmarks"
-  description: "return is this anima in your bookmarks"
+  displayName: "Узнать содержится ли тайтл в закладках"
+  description: "Узнать содержится ли тайтл в закладках"
   post:
-    displayName: "return is this anima in your bookmarks"
-    description: "return is this anima in your bookmarks"
+    displayName: "Узнать содержится ли тайтл в закладках"
+    description: "Узнать содержится ли тайтл в закладках"
     body:
       application/json:
         type: fav_basic_struct
@@ -612,11 +659,11 @@ types:
 
               }
 /fav.add:
-  displayName: "add anima to your bookmarks"
-  description: "add anima to your bookmarks"
+  displayName: "Добавить тайтл в закладки"
+  description: "Добавить тайтл в закладки"
   post:
-    displayName: "add anima to your bookmarks"
-    description: "add anima to your bookmarks"
+    displayName: "Добавить тайтл в закладки"
+    description: "Добавить тайтл в закладки"
     body:
       application/json:
         type: fav_basic_struct
@@ -641,11 +688,11 @@ types:
               }
               }
 /fav.delete:
-  displayName: "remove anima from your bookmarks"
-  description: "remove anima from your bookmarks"
+  displayName: "Удалить тайтл из закладок"
+  description: "Удалить тайтл из закладок"
   post:
-    displayName: "remove anima from your bookmarks"
-    description: "remove anima from your bookmarks"
+    displayName: "Удалить тайтл из закладок"
+    description: "Удалить тайтл из закладок"
     body:
       application/json:
         type: fav_basic_struct
