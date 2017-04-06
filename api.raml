@@ -5,6 +5,48 @@ mediaType: application/json
 version: v1
 baseUri: http://anidub-api.herokuapp.com/method
 types:
+  fav_basic_struct:
+    type: object
+    properties:
+      id: integer
+      user_id: integer
+      password: string
+  fav_count_struct:
+    type: object
+    properties:
+      user_id: integer
+      password: string
+  fav_list_struct:
+    type: object
+    properties:
+      user_id: integer
+      password: string
+      page: integer
+  Account_login_struct:
+    type: object
+    properties:
+      login: string
+      password: string
+  Get_Episode_struct:
+    type: object
+    properties:
+      id: integer
+  Super_Search_struct:
+    type: object
+    properties:
+      genres: integer
+      dubbers: integer
+      year: integer
+      studio: integer
+      sort: integer
+      cat: integer
+      series: integer
+      page: integer
+  Search_struct:
+    type: object
+    properties:
+      query: string
+      page: integer
   Page_struct:
     type: object
     properties:
@@ -60,9 +102,34 @@ types:
                   Votes: string
   TitleInfo:
     type: object
+  fav_delete_response:
+    type: object
+    properties:
+      Error: boolean
+      Response:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+          Data: string
+  account_login_response:
+    type: object
+    properties:
+      Error: boolean
+      Response:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+          Data:
+            type: object
+            properties:
+              ID: string
+
 /titles.list:
-    description: Get List of anime from page
+    description: "Get List of anime from page"
     post:
+
       displayName: "Get List of anime from page"
       body:
         application/json:
@@ -108,7 +175,7 @@ types:
                 "Dubbers": "Lonely Dragon, Oni",
                 "Translators": "Oni",
                 "Studio": "Zero-G",
-                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами, где благодаря уникальной кухне она начинает созревать как личность."
+                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами"
                 },
                 "Commentaries": "19",
                 "Rating": {
@@ -169,7 +236,7 @@ types:
                         "Dubbers": "Lonely Dragon, Oni",
                         "Translators": "Fraksinus",
                         "Studio": "Zero-G",
-                        "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами, где благодаря уникальной кухне она начинает созревать как личность."
+                        "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами"
                       },
                       "Comments": {
                         "Count": "19",
@@ -199,3 +266,375 @@ types:
                     }
                   }
                 }
+/titles.search:
+  displayName: "Search anime by string"
+  description: "Search anime by string"
+  post:
+    displayName: "Search anime by string"
+    description: "Search anime by string"
+    body:
+      application/json:
+        type: Search_struct
+        example: |
+            {
+            "query": "Наруто",
+            "page": 0
+            }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "Error": false,
+              "Response": {
+              "Code": 200,
+              "Message": "Success.",
+              "Data": [
+              {
+              "ID": "10059",
+              "Url": "http://online.anidub.com/anime_tv/anime_ongoing/10059-vkusnyatina-po-italyanski-piace-watashi-no-italian-01-iz-12.html",
+              "Title": {
+              "Full": "Вкуснятина по-итальянски / Piace: Watashi no Italian [11 из 12]",
+              "Russian": "Вкуснятина по-итальянски",
+              "Original": "Piace: Watashi no Italian",
+              "Episodes": "[11 из 12]"
+              },
+              "Uploader": "Planokyr128",
+              "Categories": [
+              "Аниме TV Онлайн",
+              "Аниме Ongoing Онлайн"
+              ],
+              "Poster": "http://static3.anidub.com/online/poster/26bb3e2e4b.jpg",
+              "Information": {
+                "Year": "2017",
+                "Genres": "комедия, повседневность",
+                "Country": "Япония",
+                "Episodes": "12",
+                "Release": "c 11.01.2017",
+                "Director": "Сакурай Хироаки",
+                "Author": "Ватанабэ Ацуко",
+                "Dubbers": "Lonely Dragon, Oni",
+                "Translators": "Oni",
+                "Studio": "Zero-G",
+                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами"
+                },
+                "Commentaries": "19",
+                "Rating": {
+                  "Type": 0,
+                  "Grade": "93%",
+                  "Votes": ""
+                }
+                }
+                ]
+                }
+                }
+/titles.sf:
+  displayName: "Super search. Search with parametrs"
+  description: "Super search. Search with parametrs"
+  post:
+    displayName: "Super search. Search with parametrs"
+    description: "Super search. Search with parametrs"
+    body:
+      application/json:
+        type: Super_Search_struct
+        example: |
+          {
+          "genres":1,
+          "dubbers":1,
+          "year":2016,
+          "studio":1,
+          "sort":1,
+          "cat":1,
+          "series":12,
+          "page":1
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "Error": false,
+              "Response": {
+              "Code": 200,
+              "Message": "Success.",
+              "Data": [
+              {
+              "ID": "10059",
+              "Url": "http://online.anidub.com/anime_tv/anime_ongoing/10059-vkusnyatina-po-italyanski-piace-watashi-no-italian-01-iz-12.html",
+              "Title": {
+              "Full": "Вкуснятина по-итальянски / Piace: Watashi no Italian [11 из 12]",
+              "Russian": "Вкуснятина по-итальянски",
+              "Original": "Piace: Watashi no Italian",
+              "Episodes": "[11 из 12]"
+              },
+              "Uploader": "Planokyr128",
+              "Categories": [
+              "Аниме TV Онлайн",
+              "Аниме Ongoing Онлайн"
+              ],
+              "Poster": "http://static3.anidub.com/online/poster/26bb3e2e4b.jpg",
+              "Information": {
+                "Year": "2017",
+                "Genres": "комедия, повседневность",
+                "Country": "Япония",
+                "Episodes": "12",
+                "Release": "c 11.01.2017",
+                "Director": "Сакурай Хироаки",
+                "Author": "Ватанабэ Ацуко",
+                "Dubbers": "Lonely Dragon, Oni",
+                "Translators": "Oni",
+                "Studio": "Zero-G",
+                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами"
+                },
+                "Commentaries": "19",
+                "Rating": {
+                  "Type": 0,
+                  "Grade": "93%",
+                  "Votes": ""
+                }
+                }
+                ]
+                }
+                }
+/titles.getEpisodes:
+  displayName: "Get list of episodes"
+  description: "Get list of episodes"
+  post:
+    displayName: "Get list of episodes"
+    description: "Get list of episodes"
+    body:
+      application/json:
+        type: Get_Episode_struct
+        example: |
+          {
+            "id":10059
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "Error": false,
+              "Response": {
+                "Code": 200,
+                "Message": "Success.",
+                "Data": {
+                  "Mirror": [
+                  {
+                  "Name": "Вкуснятина по-итальянски - 1 серия Lonely Dragon, Oni",
+                  "Url": "http://video.sibnet.ru/shell.php?videoid=2810230"
+                  }],
+                  "Anidub": [
+                  {
+                  "Name": "Вкуснятина по-итальянски - 1 серия Lonely Dragon, Oni",
+                  "Url": "http://player.adcdn.tv/embed/storage4/2715/1//0JLQutGD0YHQvdGP0YLQuNC90LAg0L%2FQvi3QuNGC0LDQu9GM0Y%2FQvdGB0LrQuCAtIDEg0YHQtdGA0LjRjyBMb25lbHkgRHJhZ29uLCBPbmk%3D/kvv"
+                  }]
+                }
+              }
+              }
+/account.login:
+  displayName: Ath to site
+  description: Ath to site
+  post:
+    displayName: Ath to site
+    description: Ath to site
+    body:
+      application/json:
+        type: Account_login_struct
+        example: |
+          {
+          "login": "thetaiiok",
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: account_login_response
+            example: |
+              {
+              "Error": false,
+              "Response": {
+                "Code": 200,
+                "Message": "Success.",
+                "Data": {
+                  "ID": "867671"
+                }
+              }
+              }
+/fav.list:
+  displayName: "anime in your bookmarks"
+  description: "anime in your bookmarks"
+  post:
+    displayName: "anime in your bookmarks"
+    description: "anime in your bookmarks"
+    body:
+      application/json:
+        type: fav_list_struct
+        example: |
+          {
+          "user_id": 867671,
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda",
+          "page": 1
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "Error": false,
+              "Response": {
+              "Code": 200,
+              "Message": "Success.",
+              "Data": [
+              {
+              "ID": "10059",
+              "Url": "http://online.anidub.com/anime_tv/anime_ongoing/10059-vkusnyatina-po-italyanski-piace-watashi-no-italian-01-iz-12.html",
+              "Title": {
+              "Full": "Вкуснятина по-итальянски / Piace: Watashi no Italian [11 из 12]",
+              "Russian": "Вкуснятина по-итальянски",
+              "Original": "Piace: Watashi no Italian",
+              "Episodes": "[11 из 12]"
+              },
+              "Uploader": "Planokyr128",
+              "Categories": [
+              "Аниме TV Онлайн",
+              "Аниме Ongoing Онлайн"
+              ],
+              "Poster": "http://static3.anidub.com/online/poster/26bb3e2e4b.jpg",
+              "Information": {
+                "Year": "2017",
+                "Genres": "комедия, повседневность",
+                "Country": "Япония",
+                "Episodes": "12",
+                "Release": "c 11.01.2017",
+                "Director": "Сакурай Хироаки",
+                "Author": "Ватанабэ Ацуко",
+                "Dubbers": "Lonely Dragon, Oni",
+                "Translators": "Oni",
+                "Studio": "Zero-G",
+                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами"
+                },
+                "Commentaries": "19",
+                "Rating": {
+                  "Type": 0,
+                  "Grade": "93%",
+                  "Votes": ""
+                }
+                }
+                ]
+                }
+                }
+/fav.count:
+  displayName: "return count of bookmarks"
+  description: "return count of bookmarks"
+  post:
+    displayName: "return count of bookmarks"
+    description: "return count of bookmarks"
+    body:
+      application/json:
+        type: fav_count_struct
+        example: |
+          {
+          "user_id": 867671,
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: fav_delete_response
+            example: |
+              {
+              "Error": false,
+              "Response": {
+                "Code": 200,
+                "Message": "Success.",
+                "Data": "1"
+              }
+              }
+/fav.isFAV:
+  displayName: "return is this anima in your bookmarks"
+  description: "return is this anima in your bookmarks"
+  post:
+    displayName: "return is this anima in your bookmarks"
+    description: "return is this anima in your bookmarks"
+    body:
+      application/json:
+        type: fav_basic_struct
+        example: |
+          {
+          "id": 10125,
+          "user_id": 867671,
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+
+              }
+/fav.add:
+  displayName: "add anima to your bookmarks"
+  description: "add anima to your bookmarks"
+  post:
+    displayName: "add anima to your bookmarks"
+    description: "add anima to your bookmarks"
+    body:
+      application/json:
+        type: fav_basic_struct
+        example: |
+          {
+          "id": 10125,
+          "user_id": 867671,
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: fav_delete_response
+            example: |
+              {
+              "Error": false,
+              "Response": {
+                "Code": 200,
+                "Message": "Success.",
+                "Data": "Added"
+              }
+              }
+/fav.delete:
+  displayName: "remove anima from your bookmarks"
+  description: "remove anima from your bookmarks"
+  post:
+    displayName: "remove anima from your bookmarks"
+    description: "remove anima from your bookmarks"
+    body:
+      application/json:
+        type: fav_basic_struct
+        example: |
+          {
+          "id": 10125,
+          "user_id": 867671,
+          "password": "5c49ee4ee4705b81da5cb466c3a76eda"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: fav_delete_response
+            example: |
+              {
+              "Error": false,
+              "Response": {
+                "Code": 200,
+                "Message": "Success.",
+                "Data": "Removed"
+              }
+              }
