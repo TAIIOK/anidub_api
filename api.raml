@@ -173,6 +173,16 @@ types:
             type: object
             properties:
               ID: string
+  fav_isFav_response:
+    type: object
+    properties:
+      Error: boolean
+      Response:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+          Data: boolean
   titles_getEpisodes_response:
     type: object
     properties:
@@ -635,7 +645,7 @@ types:
                 "Data": "1"
               }
               }
-/fav.isFAV:
+/fav.isFav:
   displayName: "Узнать содержится ли тайтл в закладках"
   description: "Узнать содержится ли тайтл в закладках"
   post:
@@ -654,9 +664,15 @@ types:
       200:
         body:
           application/json:
+            type: fav_isFav_response
             example: |
               {
-
+              "Error":false,
+              "Response":{
+                "Code":200,
+                "Message":"Success.",
+                "Data":false
+                }
               }
 /fav.add:
   displayName: "Добавить тайтл в закладки"
