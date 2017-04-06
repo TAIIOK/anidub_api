@@ -1,0 +1,201 @@
+#%RAML 1.0
+
+title: Anidub API
+mediaType: application/json
+version: v1
+baseUri: http://anidub-api.herokuapp.com/method
+types:
+  Page_struct:
+    type: object
+    properties:
+      page: integer
+  ID_Info_struct:
+    type: object
+    properties:
+      id: integer
+  TitleList:
+    type: object
+    properties:
+      Error: boolean
+      Response:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+          Data:
+            type: object
+            properties:
+              ID: integer
+              Url: string
+              Title:
+                type: object
+                properties:
+                  Full: string
+                  Russian: string
+                  Original: string
+                  Episodes: string
+              Uploder: string
+              Categories: array
+              Poster: string
+              Information:
+                type: object
+                properties:
+                  Year: integer
+                  Genres: string
+                  Country: string
+                  Episodes: integer
+                  Release: string
+                  Director: string
+                  Author: string
+                  Dubbers: string
+                  Translators: string
+                  Studio: string
+                  Description: string
+              Commentaries: integer
+              Rating:
+                type: object
+                properties:
+                  Type: integer
+                  Grade: string
+                  Votes: string
+  TitleInfo:
+    type: object
+/titles.list:
+    description: Get List of anime from page
+    post:
+      displayName: "Get List of anime from page"
+      body:
+        application/json:
+          type: Page_struct
+          example: |
+            {
+            "page":1
+            }
+      responses:
+       200:
+        body:
+          application/json:
+            example: |
+              {
+              "Error": false,
+              "Response": {
+              "Code": 200,
+              "Message": "Success.",
+              "Data": [
+              {
+              "ID": "10059",
+              "Url": "http://online.anidub.com/anime_tv/anime_ongoing/10059-vkusnyatina-po-italyanski-piace-watashi-no-italian-01-iz-12.html",
+              "Title": {
+              "Full": "Вкуснятина по-итальянски / Piace: Watashi no Italian [11 из 12]",
+              "Russian": "Вкуснятина по-итальянски",
+              "Original": "Piace: Watashi no Italian",
+              "Episodes": "[11 из 12]"
+              },
+              "Uploader": "Planokyr128",
+              "Categories": [
+              "Аниме TV Онлайн",
+              "Аниме Ongoing Онлайн"
+              ],
+              "Poster": "http://static3.anidub.com/online/poster/26bb3e2e4b.jpg",
+              "Information": {
+                "Year": "2017",
+                "Genres": "комедия, повседневность",
+                "Country": "Япония",
+                "Episodes": "12",
+                "Release": "c 11.01.2017",
+                "Director": "Сакурай Хироаки",
+                "Author": "Ватанабэ Ацуко",
+                "Dubbers": "Lonely Dragon, Oni",
+                "Translators": "Oni",
+                "Studio": "Zero-G",
+                "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами, где благодаря уникальной кухне она начинает созревать как личность."
+                },
+                "Commentaries": "19",
+                "Rating": {
+                  "Type": 0,
+                  "Grade": "93%",
+                  "Votes": ""
+                }
+                }
+                ]
+                }
+                }
+/titles.info:
+    displayName: "Get anime info from ID"
+    description: "Get anime info from ID"
+    post:
+      displayName: "Get anime info from ID"
+      description: "Get anime info from ID"
+      body:
+        application/json:
+          type: ID_Info_struct
+          example: |
+            {
+            "id":10059
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "Error": false,
+                  "Response": {
+                    "Code": 200,
+                    "Message": "Success.",
+                    "Data": {
+                      "ID": "10059",
+                      "Url": "http://online.anidub.com/anime_tv/anime_ongoing/10059-vkusnyatina-po-italyanski-piace-watashi-no-italian-01-iz-12.html",
+                      "Title": {
+                        "Full": "Вкуснятина по-итальянски / Piace: Watashi no Italian [11 из 12]",
+                        "Russian": "Вкуснятина по-итальянски",
+                        "Original": "Piace: Watashi no Italian",
+                        "Episodes": "[11 из 12]"
+                      },
+                      "Uploader": "Planokyr128",
+                      "Categories": [
+                        "Аниме TV Онлайн",
+                        "Аниме Ongoing Онлайн"
+                      ],
+                      "Poster": "http://static3.anidub.com/online/poster/26bb3e2e4b.jpg",
+                      "Information": {
+                        "Year": "2017",
+                        "Genres": "комедия, повседневность",
+                        "Country": "Япония",
+                        "Episodes": "12",
+                        "Release": "c 11.01.2017",
+                        "Director": "Сакурай Хироаки",
+                        "Author": "Ватанабэ Ацуко",
+                        "Dubbers": "Lonely Dragon, Oni",
+                        "Translators": "Fraksinus",
+                        "Studio": "Zero-G",
+                        "Description": "Моринэ Насаке - учащаяся средней школы, устраивается на работу в итальянский ресторан Trattoria Festa, наполненный различными причудливыми персонажами, где благодаря уникальной кухне она начинает созревать как личность."
+                      },
+                      "Comments": {
+                        "Count": "19",
+                        "Best": [
+                          {
+                            "Author": "Khariton444",
+                            "Avatar": "http://online.anidub.com/uploads/fotos/foto_304435.jpg",
+                            "Content": "во всех аниме где показывают еду у меня дико текут слюни))"
+                          }
+                        ]
+                      },
+                      "Rating": {
+                        "Type": 0,
+                        "Grade": "93%",
+                        "Votes": ""
+                      },
+                      "Episodes": {
+                        "Mirror": [
+                          {
+                            "Name": "Вкуснятина по-итальянски - 1 серия Lonely Dragon, Oni",
+                            "Url": "http://video.sibnet.ru/shell.php?videoid=2810230"
+                          }
+                        ]
+                      },
+                      "Timeline": [],
+                      "Questions": []
+                    }
+                  }
+                }
